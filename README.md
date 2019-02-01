@@ -1,1 +1,36 @@
-# log
+# Log
+
+Log is a c++ header-only library for program logging.
+
+## Dependencies
+
+Application uses following software:
+
+1. gcc 4.8+ or clang 3.4+
+2. cmake 3.2+
+
+## Installation
+
+To install Log run the following commands:
+
+```bash
+git clone https://github.com/rvaser/log.git log
+cd log
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make install
+```
+
+After installation, the required header will be copied to path. You can also add Log via `cmake` by adding following commands to your CMakeLists.txt file: `add_subdirectory(vendor/log EXCLUDE_FROM_ALL)` and `target_link_libraries(your_exe log)`.
+
+## Usage
+
+
+## Contact information
+
+For additional information, help and bug reports please send an email to one of the following: robert.vaser@fer.hr
+
+## Acknowledgment
+
+This work has been supported in part by Croatian Science Foundation under the projects UIP-2013-11-7353 and IP-2018-01-5886.
