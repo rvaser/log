@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(log)
+project(logger)
 
 include(GNUInstallDirs)
 
@@ -11,10 +11,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(log INTERFACE)
+add_library(logger INTERFACE)
 
-target_include_directories(log INTERFACE
+target_include_directories(logger INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/log DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/logger DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

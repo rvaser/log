@@ -13,10 +13,11 @@
 
 namespace logger {
 
+class Logger;
+std::unique_ptr<Logger> createLogger();
+
 class Logger {
 public:
-
-    Logger();
 
     ~Logger();
 
@@ -40,7 +41,10 @@ public:
      * @brief Prints the total elapsed time so far to stderr
      */
     void total(const std::string& s) const;
+
+    friend std::unique_ptr<Logger> createLogger();
 private:
+    Logger();
     Logger(const Logger&) = delete;
     const Logger& operator=(const Logger&) = delete;
 
@@ -48,6 +52,10 @@ private:
     uint32_t bar_;
     std::chrono::time_point<std::chrono::steady_clock> time_point_;
 };
+
+std::unique_ptr<Logger> createLogger() {
+    return std::unique_ptr<Logger>(new Logger());
+}
 
 Logger::Logger()
         : time_(0.), bar_(0), time_point_(std::chrono::steady_clock::now()) {
