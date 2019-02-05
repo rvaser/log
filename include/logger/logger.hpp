@@ -1,7 +1,7 @@
 /*!
- * @file log.hpp
+ * @file logger.hpp
  *
- * @brief Log header file
+ * @brief Logger header file
  */
 
 #pragma once
@@ -11,7 +11,7 @@
 #include <chrono>
 #include <string>
 
-namespace log {
+namespace logger {
 
 class Logger {
 public:

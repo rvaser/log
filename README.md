@@ -1,6 +1,6 @@
-# Log
+# Logger
 
-Log is a c++ header-only library for program logging.
+Logger is a c++ header-only library for program logging.
 
 ## Dependencies
 
@@ -11,39 +11,39 @@ Application uses following software:
 
 ## Installation
 
-To install Log run the following commands:
+To install Logger run the following commands:
 
 ```bash
-git clone https://github.com/rvaser/log.git log
-cd log
+git clone https://github.com/rvaser/logger.git logger
+cd logger
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make install
 ```
 
-After installation, the required header will be copied to path. You can also add Log via `cmake` by adding following commands to your CMakeLists.txt file: `add_subdirectory(vendor/log EXCLUDE_FROM_ALL)` and `target_link_libraries(your_exe log)`.
+After installation, the required header will be copied to path. You can also add Logger via `cmake` by adding following commands to your `CMakeLists.txt` file: `add_subdirectory(vendor/logger EXCLUDE_FROM_ALL)` and `target_link_libraries(your_exe logger)`.
 
 ## Usage
 
 For details on how to use the logger in your code, please look at the examples bellow:
 
 ```cpp
-log::Logger logger;
+logger::Logger l;
 ...
 // begin logging from this time point
-logger();
+l();
 ...
 // print elapsed time from last time point
-logger("Message");
+l("Message");
 
 // print elapsed time in form of a progress bar (resets after 20 calls)
 while (...) {
-    logger["Progress bar message"];
+    l["Progress bar message"];
 }
 ...
 // print total elapsed time
-logger.total("Message");
+l.total("Message");
 ```
 
 ## Contact information
