@@ -18,9 +18,6 @@ public:
 
     Logger();
 
-    /*!
-     * @brief Prints the total elapsed time to stderr
-     */
     ~Logger();
 
     /*!
@@ -34,9 +31,15 @@ public:
     void operator()(const std::string& s) const;
 
     /*!
-     * @brief Prints a progress bar with the elapsed time from last time point to stderr
+     * @brief Prints a progress bar and the elapsed time from last time to
+     * stderr (the progress bar resets after 20 calls)
      */
     void operator[](const std::string& s);
+
+    /*!
+     * @brief Prints the total elapsed time so far to stderr
+     */
+    void total(const std::string& s) const;
 private:
     Logger(const Logger&) = delete;
     const Logger& operator=(const Logger&) = delete;
@@ -51,9 +54,6 @@ Logger::Logger()
 }
 
 Logger::~Logger() {
-    fprintf(stderr, " {%.2lf s}\n", time_ +
-        std::chrono::duration_cast<std::chrono::duration<double>>(
-            std::chrono::steady_clock::now() - time_point_).count());
 }
 
 void Logger::operator()() {
@@ -64,7 +64,7 @@ void Logger::operator()() {
 }
 
 void Logger::operator()(const std::string& s) const {
-    fprintf(stderr, "%s {%.2lf s}\n", s.c_str(),
+    fprintf(stderr, "%s {elapsed time = %.2lf s}\n", s.c_str(),
         std::chrono::duration_cast<std::chrono::duration<double>>(
         std::chrono::steady_clock::now() - time_point_).count());
 }
@@ -72,12 +72,18 @@ void Logger::operator()(const std::string& s) const {
 void Logger::operator[](const std::string& s) {
     ++bar_;
     std::string progress_bar = std::string(bar_, '=') + ">";
-    fprintf(stderr, "%s [%-20.20s] {%.2lf s}", s.c_str(),
+    fprintf(stderr, "%s [%-20.20s] {elapsed time = %.2lf s}", s.c_str(),
         progress_bar.c_str(),
         std::chrono::duration_cast<std::chrono::duration<double>>(
         std::chrono::steady_clock::now() - time_point_).count());
     bar_ %= 20;
     fprintf(stderr, bar_ == 0 ? "\n" : "\r");
+}
+
+void Logger::total(const std::string& s) const {
+    fprintf(stderr, "%s {elapsed time = %.2lf s}\n", s.c_str(),
+        time_ + std::chrono::duration_cast<std::chrono::duration<double>>(
+        std::chrono::steady_clock::now() - time_point_).count());
 }
 
 }
