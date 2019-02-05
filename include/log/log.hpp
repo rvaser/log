@@ -51,7 +51,7 @@ Logger::Logger()
 }
 
 Logger::~Logger() {
-    fprintf(stderr, "[~] total time = %.2lf s\n", time_ +
+    fprintf(stderr, " {%.2lf s}\n", time_ +
         std::chrono::duration_cast<std::chrono::duration<double>>(
             std::chrono::steady_clock::now() - time_point_).count());
 }
@@ -64,7 +64,7 @@ void Logger::operator()() {
 }
 
 void Logger::operator()(const std::string& s) const {
-    fprintf(stderr, "[%s] elapsed time = %.2lf s\n", s.c_str(),
+    fprintf(stderr, "%s {%.2lf s}\n", s.c_str(),
         std::chrono::duration_cast<std::chrono::duration<double>>(
         std::chrono::steady_clock::now() - time_point_).count());
 }
@@ -72,7 +72,7 @@ void Logger::operator()(const std::string& s) const {
 void Logger::operator[](const std::string& s) {
     ++bar_;
     std::string progress_bar = std::string(bar_, '=') + ">";
-    fprintf(stderr, "[%s] [%-20.20s] elapsed time = %.2lf s", s.c_str(),
+    fprintf(stderr, "%s [%-20.20s] {%.2lf s}", s.c_str(),
         progress_bar.c_str(),
         std::chrono::duration_cast<std::chrono::duration<double>>(
         std::chrono::steady_clock::now() - time_point_).count());
