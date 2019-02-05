@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <chrono>
 #include <string>
+#include <memory>
 
 namespace logger {
 
