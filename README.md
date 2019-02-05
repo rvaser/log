@@ -26,6 +26,27 @@ After installation, the required header will be copied to path. You can also add
 
 ## Usage
 
+For details on how to use the logger in your code, please look at the examples bellow:
+
+```cpp
+int main(int argc, char** argv) {
+    log::Logger logger;
+
+    // begin logging from this time point
+    logger();
+    ...
+    // print elapsed time from last time point
+    logger("Message");
+
+    // print elapsed time in form of a progress bar (restarts itself after 20 calls)
+    while (...) {
+        logger["Progress bar message"];
+    }
+    ...
+    return 0;
+    // destructor prints the total elapsed time
+}
+```
 
 ## Contact information
 
