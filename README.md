@@ -1,5 +1,7 @@
 # Logger
 
+![image](https://travis-ci.org/rvaser/logger.svg?branch=master)
+
 Logger is a c++ library for program logging.
 
 ## Dependencies
