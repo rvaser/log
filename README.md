@@ -1,6 +1,6 @@
 # Logger
 
-Logger is a c++ header-only library for program logging.
+Logger is a c++ library for program logging.
 
 ## Dependencies
 
@@ -11,7 +11,7 @@ Application uses following software:
 
 ## Installation
 
-To install Logger run the following commands:
+By running the following commands:
 
 ```bash
 git clone https://github.com/rvaser/logger.git logger
@@ -19,10 +19,12 @@ cd logger
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make install
+make
 ```
 
-After installation, the required header will be copied to path. You can also add Logger via `cmake` by adding following commands to your `CMakeLists.txt` file: `add_subdirectory(vendor/logger EXCLUDE_FROM_ALL)` and `target_link_libraries(your_exe logger)`.
+a library name `liblogger.a` will appear in `build/lib` directory. Optionally, you can run `sudo make install` to install logger library to your machine.
+
+Alternatively, add the project to your `CMakeLists.txt` file with `add_subdirectory(vendor/logger EXCLUDE_FROM_ALL)` and `target_link_libraries(your_exe logger)` commands.
 
 ## Usage
 
@@ -32,14 +34,14 @@ For details on how to use the logger in your code, please look at the examples b
 logger::Logger l;
 ...
 // begin logging from this time point
-l();
+l.log();
 ...
 // print elapsed time from last time point
-l("Message");
+l.log("Message");
 
 // print elapsed time in form of a progress bar (resets after 20 calls)
 while (...) {
-    l["Progress bar message"];
+    l.bar("Progress bar message");
 }
 ...
 // print total elapsed time

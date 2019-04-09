@@ -6,93 +6,51 @@
 
 #pragma once
 
-#include <stdio.h>
-#include <stdint.h>
+#include <cstdint>
 #include <chrono>
 #include <string>
-#include <memory>
 
 namespace logger {
 
-class Logger;
-std::unique_ptr<Logger> createLogger();
+static const std::string version = "v1.0.0";
 
 class Logger {
 public:
+    Logger();
+
+    Logger(const Logger&) = default;
+    Logger& operator=(const Logger&) = default;
+
+    Logger(Logger&&) = default;
+    Logger& operator=(Logger&&) = default;
 
     ~Logger();
 
     /*!
      * @brief Resets the time point
      */
-    void operator()();
+    void log();
 
     /*!
      * @brief Prints the elapsed time from last time point to stderr
      */
-    void operator()(const std::string& s) const;
+    void log(const std::string& msg) const;
 
     /*!
      * @brief Prints a progress bar and the elapsed time from last time to
      * stderr (the progress bar resets after 20 calls)
      */
-    void operator[](const std::string& s);
+    void bar(const std::string& msg);
 
     /*!
-     * @brief Prints the total elapsed time so far to stderr
+     * @brief Prints the total elapsed time from the first log() call
      */
-    void total(const std::string& s) const;
+    void total(const std::string& msg) const;
 
-    friend std::unique_ptr<Logger> createLogger();
 private:
-    Logger();
-    Logger(const Logger&) = delete;
-    const Logger& operator=(const Logger&) = delete;
-
     double time_;
-    uint32_t bar_;
+    std::uint32_t bar_;
     std::chrono::time_point<std::chrono::steady_clock> time_point_;
 };
-
-std::unique_ptr<Logger> createLogger() {
-    return std::unique_ptr<Logger>(new Logger());
-}
-
-Logger::Logger()
-        : time_(0.), bar_(0), time_point_(std::chrono::steady_clock::now()) {
-}
-
-Logger::~Logger() {
-}
-
-void Logger::operator()() {
-    auto new_point = std::chrono::steady_clock::now();
-    time_ += std::chrono::duration_cast<std::chrono::duration<double>>(
-        new_point - time_point_).count();
-    time_point_ = new_point;
-}
-
-void Logger::operator()(const std::string& s) const {
-    fprintf(stderr, "%s %.3lf s\n", s.c_str(),
-        std::chrono::duration_cast<std::chrono::duration<double>>(
-        std::chrono::steady_clock::now() - time_point_).count());
-}
-
-void Logger::operator[](const std::string& s) {
-    ++bar_;
-    std::string progress_bar = std::string(bar_, '=') + ">";
-    fprintf(stderr, "%s [%-20.20s] %.3lf s", s.c_str(),
-        progress_bar.c_str(),
-        std::chrono::duration_cast<std::chrono::duration<double>>(
-        std::chrono::steady_clock::now() - time_point_).count());
-    bar_ %= 20;
-    fprintf(stderr, bar_ == 0 ? "\n" : "\r");
-}
-
-void Logger::total(const std::string& s) const {
-    fprintf(stderr, "%s %.3lf s\n", s.c_str(),
-        time_ + std::chrono::duration_cast<std::chrono::duration<double>>(
-        std::chrono::steady_clock::now() - time_point_).count());
-}
 
 }
