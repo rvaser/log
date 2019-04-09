@@ -33,7 +33,7 @@ script:
     - cd build
     - cmake -DCMAKE_BUILD_TYPE=Release -Dlogger_build_tests=ON ..
     - make
-    - ./bin/logger
+    - ./bin/logger_test
 
 notifications:
     email:
